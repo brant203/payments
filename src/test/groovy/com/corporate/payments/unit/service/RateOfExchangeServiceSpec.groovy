@@ -27,8 +27,7 @@ class RateOfExchangeServiceSpec extends Specification {
         LocalDate endDate = LocalDate.of(2024, 6, 1)
         String currency = "Canada-Dollar"
 
-        URL validResponseUrl = getClass().getResource("treasuryValidResponse.json")
-        String responseBody = new File(validResponseUrl.getPath()).text
+        String responseBody = "{\"data\":[{\"country_currency_desc\":\"Canada-Dollar\",\"exchange_rate\":\"1.532\",\"record_date\":\"2001-03-31\"},{\"country_currency_desc\":\"1.532\",\"exchange_rate\":\"1.541\",\"record_date\":\"2001-06-30\"}],\"meta\":{\"count\":2,\"labels\":{\"country_currency_desc\":\"Country-CurrencyDescription\",\"exchange_rate\":\"ExchangeRate\",\"record_date\":\"RecordDate\"},\"dataTypes\":{\"country_currency_desc\":\"STRING\",\"exchange_rate\":\"NUMBER\",\"record_date\":\"DATE\"},\"dataFormats\":{\"country_currency_desc\":\"String\",\"exchange_rate\":\"10.2\",\"record_date\":\"YYYY-MM-DD\"},\"total-count\":2,\"total-pages\":1},\"links\":{\"self\":\"&page%5Bnumber%5D=1&page%5Bsize%5D=100\",\"first\":\"&page%5Bnumber%5D=1&page%5Bsize%5D=100\",\"prev\":null,\"next\":null,\"last\":\"&page%5Bnumber%5D=1&page%5Bsize%5D=100\"}}"
         ResponseEntity<?> response = ResponseEntity.ok(responseBody)
 
         String rateOfExchangeQueryURI = "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/rates_of_exchange" +
@@ -102,8 +101,7 @@ class RateOfExchangeServiceSpec extends Specification {
                 "?fields=country_currency_desc,exchange_rate,record_date" +
                 "&filter=country_currency_desc:eq:Canada-Dollar,record_date:gte:2024-01-01,record_date:lte:2024-06-01&sort=-record_date"
 
-        URL validResponseUrl = getClass().getResource("treasuryNoResultsResponse.json")
-        String responseBody = new File(validResponseUrl.getPath()).text
+        String responseBody = "{\"data\":[],\"meta\":{\"count\":0,\"labels\":{\"country_currency_desc\":\"Country-CurrencyDescription\",\"exchange_rate\":\"ExchangeRate\",\"record_date\":\"RecordDate\"},\"dataTypes\":{\"country_currency_desc\":\"STRING\",\"exchange_rate\":\"NUMBER\",\"record_date\":\"DATE\"},\"dataFormats\":{\"country_currency_desc\":\"String\",\"exchange_rate\":\"10.2\",\"record_date\":\"YYYY-MM-DD\"},\"total-count\":0,\"total-pages\":0},\"links\":{\"self\":\"&page%5Bnumber%5D=1&page%5Bsize%5D=100\",\"first\":\"&page%5Bnumber%5D=1&page%5Bsize%5D=100\",\"prev\":null,\"next\":\"&page%5Bnumber%5D=2&page%5Bsize%5D=100\",\"last\":\"&page%5Bnumber%5D=0&page%5Bsize%5D=100\"}}"
         ResponseEntity<?> response = ResponseEntity.ok(responseBody)
 
         when:
